@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Thematic{% endblock %}
+
+{% block body %}
+    <h1>Create new Thematic</h1>
+
+    {{ include('thematic/_form.html.twig') }}
+
+    <a href="{{ path('app_thematic_index') }}">back to list</a>
+{% endblock %}

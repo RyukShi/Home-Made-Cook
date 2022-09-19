@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Thematic index{% endblock %}
+
+{% block body %}
+    <h1>Thematic index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for thematic in thematics %}
+            <tr>
+                <td>{{ thematic.id }}</td>
+                <td>{{ thematic.name }}</td>
+                <td>
+                    <a href="{{ path('app_thematic_show', {'id': thematic.id}) }}">show</a>
+                    <a href="{{ path('app_thematic_edit', {'id': thematic.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_thematic_new') }}">Create new</a>
+{% endblock %}
