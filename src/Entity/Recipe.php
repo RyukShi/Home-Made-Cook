@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\RecipeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -17,12 +20,14 @@ class Recipe
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 4, max: 255)]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::JSON, nullable: false)]
     private array $ingredients = [];
 
     #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'recipes')]
@@ -33,6 +38,14 @@ class Recipe
 
     #[ORM\ManyToOne(inversedBy: 'recipes')]
     private ?Category $category = null;
+
+    #[ORM\Column(type: Types::SMALLINT)]
+    #[Assert\NotBlank]
+    #[Assert\Expression(
+        'value >= 5',
+        message: 'The value must be greater than or equal to 5'
+    )]
+    private ?int $preparationTime = null;
 
     #[ORM\Column(length: 255)]
     private ?string $difficulty = null;
@@ -71,6 +84,9 @@ class Recipe
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function getIngredients(): array
     {
         return $this->ingredients;
@@ -127,6 +143,23 @@ class Recipe
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
+    }
+
+    public function getPreparationTime(): ?int
+    {
+        return $this->preparationTime;
+    }
+
+    public function setPreparationTime(int $preparationTime): self
+    {
+        $this->preparationTime = $preparationTime;
 
         return $this;
     }

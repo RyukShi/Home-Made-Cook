@@ -25,22 +25,28 @@ class RecipeController extends AbstractController
     public function new(Request $request, RecipeRepository $recipeRepository): Response
     {
         $recipe = new Recipe();
-        $form = $this->createForm(RecipeType::class, $recipe);
-        $form->handleRequest($request);
+        // Creates and returns a Form instance from the type of the form
+        $recipeForm = $this->createForm(RecipeType::class, $recipe);
+        // Determines whether to submit the form or not
+        $recipeForm->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($recipeForm->isSubmitted() && $recipeForm->isValid()) {
+            // persist the recipe and flush it
             $recipeRepository->add($recipe, true);
-
-            return $this->redirectToRoute('app_recipe_index', [], Response::HTTP_SEE_OTHER);
+            // redirect to the recipe show page
+            return $this->redirectToRoute(
+                'app_recipe_show',
+                ['id' => $recipe->getId()],
+                Response::HTTP_SEE_OTHER
+            );
         }
 
         return $this->renderForm('recipe/new.html.twig', [
-            'recipe' => $recipe,
-            'form' => $form,
+            'recipe_form' => $recipeForm,
         ]);
     }
 
-    #[Route('/{id}', name: 'app_recipe_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_recipe_show', methods: ['GET'], requirements: ['id' => '[1-9]\d*'])]
     public function show(Recipe $recipe): Response
     {
         return $this->render('recipe/show.html.twig', [
@@ -48,28 +54,32 @@ class RecipeController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_recipe_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_recipe_edit', methods: ['GET', 'POST'], requirements: ['id' => '[1-9]\d*'])]
     public function edit(Request $request, Recipe $recipe, RecipeRepository $recipeRepository): Response
     {
-        $form = $this->createForm(RecipeType::class, $recipe);
-        $form->handleRequest($request);
+        $recipeForm = $this->createForm(RecipeType::class, $recipe);
+        $recipeForm->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($recipeForm->isSubmitted() && $recipeForm->isValid()) {
             $recipeRepository->add($recipe, true);
 
-            return $this->redirectToRoute('app_recipe_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute(
+                'app_recipe_show',
+                ['id' => $recipe->getId()],
+                Response::HTTP_SEE_OTHER
+            );
         }
 
         return $this->renderForm('recipe/edit.html.twig', [
             'recipe' => $recipe,
-            'form' => $form,
+            'recipe_form' => $recipeForm,
         ]);
     }
 
-    #[Route('/{id}', name: 'app_recipe_delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'app_recipe_delete', methods: ['POST'], requirements: ['id' => '[1-9]\d*'])]
     public function delete(Request $request, Recipe $recipe, RecipeRepository $recipeRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$recipe->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $recipe->getId(), $request->request->get('_token'))) {
             $recipeRepository->remove($recipe, true);
         }
 

@@ -1,4 +1,36 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+{{ form_start(recipe_form) }}
+    {{ form_widget(recipe_form._token) }}
+    {{ form_errors(recipe_form) }}
+
+    {{ form_row(recipe_form.name) }}
+
+    {{ form_errors(recipe_form.ingredients) }}
+
+    <button type="button" class="btn-add-item" data-collection-holder-id="#ingredients">Add new ingredient</button>
+
+    <div
+        id="ingredients"
+        data-prototype="{{ include("recipe/_ingredient_form.html.twig", {form: recipe_form.ingredients.vars.prototype})|e('html_attr') }}"
+        data-index="{{ recipe_form.ingredients|length > 0 ? recipe_form.ingredients|last.vars.name + 1 : 0 }}">
+        {% for ingredientForm in recipe_form.ingredients %}
+            <div>
+                {{ include("recipe/_ingredient_form.html.twig", {form: ingredientForm}) }}
+            </div>
+        {% endfor %}
+    </div>
+
+    {{ form_row(recipe_form.description) }}
+
+    {{ form_row(recipe_form.tags) }}
+
+    {{ form_row(recipe_form.thematic) }}
+
+    {{ form_row(recipe_form.category) }}
+
+    {{ form_row(recipe_form.difficulty) }}
+
+    {{ form_row(recipe_form.preparationTime) }}
+
+    <button type="submit">{{ button_label|default('Create new recipe !') }}</button>
+
+{{ form_end(recipe_form) }}
