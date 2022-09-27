@@ -50,9 +50,17 @@ class Recipe
     #[ORM\Column(length: 255)]
     private ?string $difficulty = null;
 
+    #[ORM\OneToMany(mappedBy: 'recipe', targetEntity: Comment::class)]
+    private Collection $comments;
+
+    #[ORM\ManyToOne(inversedBy: 'recipes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $cooker = null;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -172,6 +180,48 @@ class Recipe
     public function setDifficulty(string $difficulty): self
     {
         $this->difficulty = $difficulty;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getRecipe() === $this) {
+                $comment->setRecipe(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCooker(): ?User
+    {
+        return $this->cooker;
+    }
+
+    public function setCooker(?User $cooker): self
+    {
+        $this->cooker = $cooker;
 
         return $this;
     }
