@@ -79,6 +79,22 @@ class RecipeType extends AbstractType
                     'step' => 5,
                 ],
             ])
+            ->add('recipeCost', ChoiceType::class, [
+                'label' => 'Recipe cost : ',
+                'choices' => [
+                    'Cheap' => 'Cheap',
+                    'Medium' => 'Medium',
+                    'Expensive' => 'Expensive',
+                ]
+            ])
+            ->add('peopleNumber', IntegerType::class, [
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'Recipe people number',
+                    'min' => 1,
+                    'step' => 1,
+                ],
+            ])
             ->add('imageFile', VichImageType::class, [
                 'label' => 'Recipe image',
                 'required' => false,

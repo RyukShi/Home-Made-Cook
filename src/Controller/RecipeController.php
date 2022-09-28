@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 #[Route('/recipe')]
 class RecipeController extends AbstractController
@@ -22,9 +23,11 @@ class RecipeController extends AbstractController
     }
 
     #[Route('/new', name: 'app_recipe_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER')]
     public function new(Request $request, RecipeRepository $recipeRepository): Response
     {
         $recipe = new Recipe();
+        $recipe->setCooker($this->getUser());
         // Creates and returns a Form instance from the type of the form
         $recipeForm = $this->createForm(RecipeType::class, $recipe);
         // Determines whether to submit the form or not
@@ -55,6 +58,7 @@ class RecipeController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_recipe_edit', methods: ['GET', 'POST'], requirements: ['id' => '[1-9]\d*'])]
+    #[IsGranted('ROLE_USER')]
     public function edit(Request $request, Recipe $recipe, RecipeRepository $recipeRepository): Response
     {
         $recipeForm = $this->createForm(RecipeType::class, $recipe);
@@ -77,6 +81,7 @@ class RecipeController extends AbstractController
     }
 
     #[Route('/{id}/delete', name: 'app_recipe_delete', methods: ['POST'], requirements: ['id' => '[1-9]\d*'])]
+    #[IsGranted('ROLE_USER')]
     public function delete(Request $request, Recipe $recipe, RecipeRepository $recipeRepository): Response
     {
         if ($this->isCsrfTokenValid('delete' . $recipe->getId(), $request->request->get('_token'))) {

@@ -11,12 +11,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Ingredient implements JsonSerializable
 {
     #[Assert\NotBlank]
+    #[Assert\Length(min: 3, max: 20)]
     private string $name;
 
     #[Assert\NotBlank]
+    #[Assert\Length(min: 3, max: 20)]
     private string $quantity;
 
     #[Assert\NotBlank]
+    #[Assert\Length(max: 10)]
     private string $unit;
 
     public function __construct(

@@ -31,6 +31,12 @@
 
     {{ form_row(recipe_form.preparationTime) }}
 
+    {{ form_row(recipe_form.recipeCost) }}
+
+    {{ form_row(recipe_form.peopleNumber) }}
+
+    {{ form_row(recipe_form.imageFile)}}
+
     <button type="submit">{{ button_label|default('Create new recipe !') }}</button>
 
 {{ form_end(recipe_form) }}

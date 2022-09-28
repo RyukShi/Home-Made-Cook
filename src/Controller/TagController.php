@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 #[Route('/tag')]
 class TagController extends AbstractController
@@ -22,6 +23,7 @@ class TagController extends AbstractController
     }
 
     #[Route('/new', name: 'app_tag_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN', statusCode: 403, message: 'Access denied, you are not an admin')]
     public function new(Request $request, TagRepository $tagRepository): Response
     {
         $tag = new Tag();
@@ -49,6 +51,7 @@ class TagController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_tag_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN', statusCode: 403, message: 'Access denied, you are not an admin')]
     public function edit(Request $request, Tag $tag, TagRepository $tagRepository): Response
     {
         $form = $this->createForm(TagType::class, $tag);
@@ -66,7 +69,8 @@ class TagController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_tag_delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'app_tag_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN', statusCode: 403, message: 'Access denied, you are not an admin')]
     public function delete(Request $request, Tag $tag, TagRepository $tagRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$tag->getId(), $request->request->get('_token'))) {

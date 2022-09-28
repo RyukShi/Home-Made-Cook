@@ -65,6 +65,11 @@ class Recipe
 
     #[ORM\Column(nullable: true)]
     #[Vich\UploadableField(mapping: 'recipe_img', fileNameProperty: 'imageName')]
+    #[Assert\File(
+        maxSize: '2M',
+        mimeTypes: ['image/jpeg', 'image/png'],
+        mimeTypesMessage: 'Please upload a valid image, only jpeg or png are allowed'
+    )]
     private ?File $imageFile = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]

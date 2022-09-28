@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 #[Route('/thematic')]
 class ThematicController extends AbstractController
@@ -22,6 +23,7 @@ class ThematicController extends AbstractController
     }
 
     #[Route('/new', name: 'app_thematic_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN', statusCode: 403, message: 'Access denied, you are not an admin')]
     public function new(Request $request, ThematicRepository $thematicRepository): Response
     {
         $thematic = new Thematic();
@@ -49,6 +51,7 @@ class ThematicController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_thematic_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN', statusCode: 403, message: 'Access denied, you are not an admin')]
     public function edit(Request $request, Thematic $thematic, ThematicRepository $thematicRepository): Response
     {
         $form = $this->createForm(ThematicType::class, $thematic);
@@ -66,7 +69,8 @@ class ThematicController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_thematic_delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'app_thematic_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN', statusCode: 403, message: 'Access denied, you are not an admin')]
     public function delete(Request $request, Thematic $thematic, ThematicRepository $thematicRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$thematic->getId(), $request->request->get('_token'))) {
