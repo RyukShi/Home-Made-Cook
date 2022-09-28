@@ -10,8 +10,11 @@ use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
+#[Vich\Uploadable]
 class Recipe
 {
     #[ORM\Id]
@@ -56,6 +59,22 @@ class Recipe
     #[ORM\ManyToOne(inversedBy: 'recipes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $cooker = null;
+
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $imageName = null;
+
+    #[ORM\Column(nullable: true)]
+    #[Vich\UploadableField(mapping: 'recipe_img', fileNameProperty: 'imageName')]
+    private ?File $imageFile = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $updatedAt = null;
+
+    #[ORM\Column]
+    private ?int $peopleNumber = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $recipeCost = null;
 
     public function __construct()
     {
@@ -222,6 +241,63 @@ class Recipe
     public function setCooker(?User $cooker): self
     {
         $this->cooker = $cooker;
+
+        return $this;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    public function setImageName(?string $imageName): self
+    {
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $imageFile = null): self
+    {
+        $this->imageFile = $imageFile;
+
+        if ($imageFile ==! null) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function getPeopleNumber(): ?int
+    {
+        return $this->peopleNumber;
+    }
+
+    public function setPeopleNumber(int $peopleNumber): self
+    {
+        $this->peopleNumber = $peopleNumber;
+
+        return $this;
+    }
+
+    public function getRecipeCost(): ?string
+    {
+        return $this->recipeCost;
+    }
+
+    public function setRecipeCost(string $recipeCost): self
+    {
+        $this->recipeCost = $recipeCost;
 
         return $this;
     }

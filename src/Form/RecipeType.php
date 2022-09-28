@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class RecipeType extends AbstractType
 {
@@ -77,6 +78,14 @@ class RecipeType extends AbstractType
                     'min' => 5,
                     'step' => 5,
                 ],
+            ])
+            ->add('imageFile', VichImageType::class, [
+                'label' => 'Recipe image',
+                'required' => false,
+                'allow_delete' => true,
+                'download_uri' => true,
+                'image_uri' => true,
+                'asset_helper' => true,
             ]);
     }
 
