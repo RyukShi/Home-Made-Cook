@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit your profile{% endblock %}
+
+{% block body %}
+    <h1>Edit your profile</h1>
+
+    {{ include('user_profile/_form.html.twig', {form: userModificationForm}) }}
+
+    <a href="{{ path('app_user_profile_index') }}">back to my profile</a>
+
+    <h3 style="color: red;">DANGER ZONE</h3>
+
+    <p>Delete your account, you will lose all your data.</p>
+
+    <form
+        method="POST"
+        action="{{ path('app_user_profile_delete', {'id': user.id}) }}"
+        onsubmit="return confirm('Are you sure you want to delete your account? You will lose all your data.');">
+
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}" />
+        <button type="submit">Delete my account</button>
+    </form>
+{% endblock %}

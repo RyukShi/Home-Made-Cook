@@ -57,7 +57,7 @@ class Recipe
     private Collection $comments;
 
     #[ORM\ManyToOne(inversedBy: 'recipes')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?User $cooker = null;
 
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]

@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block body %}
+    <h1>My Profile</h1>
+
+    <h3>Hi {{ user.username }} !</h3>
+
+    {% if user.recipes is not empty %}
+        <h3>My Recipes</h3>
+        <ul>
+            {% for recipe in user.recipes %}
+                <li>
+                    <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}" type="button">{{ recipe.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have no recipes yet.</p>
+    {% endif %}
+
+    <a href="{{ path('app_user_profile_edit', {'id': user.id}) }}" type="button">Edit my profile</a>
+    <a href="{{ path('app_logout') }}" type="button">Log out</a>
+{% endblock %}
