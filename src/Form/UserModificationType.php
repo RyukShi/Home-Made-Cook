@@ -34,8 +34,9 @@ class UserModificationType extends AbstractType
             ->add('imageFile', VichImageType::class, [
                 'required' => false,
                 'allow_delete' => true,
-                'download_uri' => false,
-                'image_uri' => false,
+                'download_uri' => true,
+                'image_uri' => true,
+                'asset_helper' => true,
                 'label' => 'Your profile picture : ',
             ])
             ->add('submit', SubmitType::class, [

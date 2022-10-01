@@ -31,6 +31,10 @@ class Recipe
     private ?string $description = null;
 
     #[ORM\Column(type: Types::JSON, nullable: false)]
+    #[Assert\Count(
+        min: 3,
+        minMessage: 'You must have at least 3 ingredients in your recipe.'
+    )]
     private array $ingredients = [];
 
     #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'recipes')]
@@ -46,7 +50,7 @@ class Recipe
     #[Assert\NotBlank]
     #[Assert\Expression(
         'value >= 5',
-        message: 'The value must be greater than or equal to 5'
+        message: 'The value must be greater than or equal to 5.'
     )]
     private ?int $preparationTime = null;
 

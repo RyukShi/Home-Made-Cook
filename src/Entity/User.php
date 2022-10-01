@@ -64,6 +64,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $updatedAt = null;
 
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    private ?array $favorites = null;
+
     public function __construct()
     {
         $this->registeredDate = new \DateTimeImmutable();
@@ -237,5 +240,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
+    }
+
+    public function getFavorites(): ?array
+    {
+        return $this->favorites;
+    }
+
+    public function addRecipeToFavorites(int $recipeId): self
+    {
+        if ($this->favorites === null) {
+            $this->favorites = [];
+        }
+        if (!in_array($recipeId, $this->favorites)) {
+            $this->favorites[] = $recipeId;
+        }
+
+        return $this;
+    }
+
+    public function removeRecipeFromFavorites(int $recipeId): self
+    {
+        if (in_array($recipeId, $this->favorites)) {
+            $key = array_search($recipeId, $this->favorites);
+            unset($this->favorites[$key]);
+        }
+
+        return $this;
     }
 }
