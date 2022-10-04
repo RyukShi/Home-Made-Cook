@@ -6,8 +6,8 @@
     <h1>{{ recipe.name|upper }}</h1>
 
     <div>
-        {% if recipe.imageFile is not null %}
-            <img src="{{ 'uploads/images/recipes/' ~ recipe.image }}" alt="{{ recipe.name }}">
+        {% if recipe.imageName is not null %}
+            <img src="{{ asset('uploads/images/recipes/' ~ recipe.imageName) }}" alt="{{ recipe.name }}" />
         {% endif %}
         <p>{{ recipe.description }}</p>
         <ul>

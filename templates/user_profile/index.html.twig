@@ -5,7 +5,13 @@
 {% block body %}
     <h1>My Profile</h1>
 
-    <h3>Hi {{ user.username }} !</h3>
+    <h3>Hi {{ user.username }}, happy to see you again.</h3>
+
+    {% if user.imageName is not null %}
+        <img src="{{ asset('uploads/images/profiles_pictures/' ~ recipe.imageName) }}" alt="User profile picture" />
+    {% else %}
+        <img src="{{ asset('uploads/images/profiles_pictures/default/default.jpg') }}" alt="User profile picture" />
+    {% endif %}
 
     {% if user.recipes is not empty %}
         <h3>My Recipes</h3>
@@ -18,6 +24,11 @@
         </ul>
     {% else %}
         <p>You have no recipes yet.</p>
+        <a href="{{ path('app_recipe_new') }}" type="button">Create a new recipe !</a>
+    {% endif %}
+
+    {% if user.favorites is not empty %}
+        <a href="{{ path('app_user_profile_favorites', {'id': user.id}) }}">My Favorites Recipes</a>
     {% endif %}
 
     <a href="{{ path('app_user_profile_edit', {'id': user.id}) }}" type="button">Edit my profile</a>

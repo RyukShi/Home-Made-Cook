@@ -9,6 +9,7 @@
     <button type="button" class="btn-add-item" data-collection-holder-id="#ingredients">Add new ingredient</button>
 
     <div
+        class="flex flex-wrap justify-evenly"
         id="ingredients"
         data-prototype="{{ include("recipe/_ingredient_form.html.twig", {form: recipe_form.ingredients.vars.prototype})|e('html_attr') }}"
         data-index="{{ recipe_form.ingredients|length > 0 ? recipe_form.ingredients|last.vars.name + 1 : 0 }}">

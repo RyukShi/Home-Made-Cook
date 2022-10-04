@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My favorites recipes{% endblock %}
+
+{% block body %}
+    {% for recipe in favorites_recipe %}
+        <div class="">
+            {% if recipe.imageName %}
+                <img src="{{ asset('uploads/images/recipes' ~ recipe.imageName) }}" class="" alt="{{ recipe.name }}" />
+            {% endif %}
+            <div class="">
+                <h5 class="">{{ recipe.name }}</h5>
+                <p class="">{{ recipe.peopleNumber ~ ' people' }} | {{ '$ ' ~ recipe.recipeCost }} | {{ 'Difficulty : ' ~ recipe.difficulty|upper }}</p>
+                <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}">Show</a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
