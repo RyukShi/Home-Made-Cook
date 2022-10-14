@@ -84,10 +84,14 @@ class Recipe
     #[ORM\Column(length: 255)]
     private ?string $recipeCost = null;
 
+    #[ORM\Column]
+    private \DateTimeImmutable $createdAt;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -308,5 +312,10 @@ class Recipe
         $this->recipeCost = $recipeCost;
 
         return $this;
+    }
+
+    public function getCreatedAt(): \DateTimeImmutable
+    {
+        return $this->createdAt;
     }
 }

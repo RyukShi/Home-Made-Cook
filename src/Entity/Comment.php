@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\CommentRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
@@ -28,6 +29,15 @@ class Comment
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Recipe $recipe = null;
+
+    #[ORM\Column(type: Types::BOOLEAN, nullable: false)]
+    private bool $validated = true;
+
+    #[ORM\Column(type: Types::BOOLEAN, nullable: false)]
+    private bool $reported = false;
+
+    #[ORM\Column(type: Types::BOOLEAN, nullable: false)]
+    private bool $modified = false;
 
     public function __construct()
     {
@@ -78,5 +88,39 @@ class Comment
         $this->recipe = $recipe;
 
         return $this;
+    }
+
+    public function isValidated(): bool
+    {
+        return $this->validated;
+    }
+
+    public function setValidated(bool $validated): self
+    {
+        $this->validated = $validated;
+
+        return $this;
+    }
+
+    public function isReported(): bool
+    {
+        return $this->reported;
+    }
+
+    public function setReported(bool $reported): self
+    {
+        $this->reported = $reported;
+
+        return $this;
+    }
+
+    public function isModified(): bool
+    {
+        return $this->modified;
+    }
+
+    public function __toString(): string
+    {
+        return 'isReported: ' . $this->reported . ' - isModified: ' . $this->modified;
     }
 }

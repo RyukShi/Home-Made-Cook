@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit my comment{% endblock %}
+
+{% block body %}
+    <h1>Edit my comment</h1>
+
+    {{ form_start(comment_form) }}
+        {{ form_row(comment_form.content) }}
+        {{ form_row(comment_form.submit) }}
+    {{ form_end(comment_form) }}
+
+    <a href="{{ path('app_recipe_show', {'id': comment.recipe.id}) }}">Back to recipe</a>
+
+    {{ include('comment/_delete_form.html.twig') }}
+{% endblock %}

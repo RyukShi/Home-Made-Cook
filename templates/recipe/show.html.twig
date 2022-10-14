@@ -4,6 +4,7 @@
 
 {% block body %}
     <h1>{{ recipe.name|upper }}</h1>
+    <h4>{{ 'Create by: ' ~ recipe.cooker.username ~ ' on ' ~ recipe.createdAt|date('d/m/Y') }}</h4>
 
     <div>
         {% if recipe.imageName is not null %}
@@ -15,6 +16,14 @@
                 <li>{{ ingredient.name ~ ' ' ~ ingredient.quantity ~ ingredient.unit }}</li>
             {% endfor %}
         </ul>
+        <p>{{ 'Difficulty: ' ~ recipe.difficulty ~ ' | Cost: ' ~ recipe.recipeCost ~ ' | Preparation time: ' ~ recipe.preparationTime ~ 'min' }}</p>
+        <div>
+            {% for tag in recipe.tags %}
+                <span class="text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-blue-200 text-blue-700 rounded-full">
+                    {{ tag.name }}
+                </span>
+            {% endfor %}
+        </div>
     </div>
 
     {% if app.user %}
@@ -28,5 +37,30 @@
     {% if is_cooker %}
         <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">Edit my recipe</a>
         {{ include('recipe/_delete_form.html.twig') }}
+    {% endif %}
+
+    <h2>Comments</h2>
+
+    {% if app.user %}
+        {{ form_start(comment_form) }}
+            {{ form_row(comment_form.content) }}
+            {{ form_row(comment_form.submit) }}
+        {{ form_end(comment_form) }}
+    {% endif %}
+
+    {% if recipe.comments is not empty %}
+        {% for comment in recipe.comments %}
+            <div>
+                <p>{{ comment.content }}</p>
+                <p>By {{ comment.cooker.username }} on {{ comment.createdAt|date('d/m/Y') }}</p>
+                {# if the user is logged in and is the author of the comment #}
+                {% if app.user and app.user.id == comment.cooker.id %}
+                    <a href="{{ path('app_comment_edit', {'id': comment.id}) }}">Edit</a>
+                    {{ include('comment/_delete_form.html.twig') }}
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No comments yet.</p>
     {% endif %}
 {% endblock %}

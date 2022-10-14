@@ -4,7 +4,6 @@ namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use App\Entity\Recipe;
 use App\Entity\Category;
 use App\Entity\Tag;
 use App\Entity\Thematic;
@@ -25,7 +24,7 @@ class AppFixtures extends Fixture
             'Nepalese', 'Sri Lankan', 'Pakistani', 'Ukrainian', 'Belarusian', 'Georgian'
         ];
 
-        foreach($thematics_name as $name) {
+        foreach ($thematics_name as $name) {
             $thematic = new Thematic();
             $thematic->setName($name);
             $manager->persist($thematic);
