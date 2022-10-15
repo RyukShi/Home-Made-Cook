@@ -3,4 +3,16 @@
 {% block title %}Home page{% endblock %}
 
 {% block body %}
+    <h1>Popular recipes</h1>
+    <p>This is the 10 most popular recipes</p>
+    <div class="flex flex-wrap justify-between">
+        {% for recipe in popular_recipes %}
+            <div>
+                <div>
+                    <h5>{{ recipe.name }}</h5>
+                    <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}">show recipe</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

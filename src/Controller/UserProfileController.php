@@ -45,7 +45,7 @@ class UserProfileController extends AbstractController
         if ($userModificationForm->isSubmitted() && $userModificationForm->isValid()) {
 
             if (
-                ($userModificationForm->get('plainPassword') !== null) &&
+                ($userModificationForm->get('plainPassword')->getData() !== null) &&
                 ($userModificationForm->get('plainPassword')->getData() === $userModificationForm->get('confirmPassword')->getData())
             ) {
                 $user->setPassword(

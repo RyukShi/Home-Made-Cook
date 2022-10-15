@@ -5,7 +5,7 @@
 {% block body %}
     <h1>My Profile</h1>
 
-    <h3>Hi {{ user.username }}, happy to see you again.</h3>
+    <h3>Hi <strong>{{ user.username }}</strong>, happy to see you again.</h3>
 
     {% if user.imageName is not null %}
         <img src="{{ asset('uploads/images/profiles_pictures/' ~ recipe.imageName) }}" alt="User profile picture" />
@@ -18,19 +18,18 @@
         <ul>
             {% for recipe in user.recipes %}
                 <li>
-                    <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}" type="button">{{ recipe.name }}</a>
+                    <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}">{{ recipe.name }}</a>
                 </li>
             {% endfor %}
         </ul>
     {% else %}
         <p>You have no recipes yet.</p>
-        <a href="{{ path('app_recipe_new') }}" type="button">Create a new recipe !</a>
+        <a href="{{ path('app_recipe_new') }}">Create a new recipe !</a>
     {% endif %}
 
     {% if user.favorites is not empty %}
         <a href="{{ path('app_user_profile_favorites', {'id': user.id}) }}">My Favorites Recipes</a>
     {% endif %}
 
-    <a href="{{ path('app_user_profile_edit', {'id': user.id}) }}" type="button">Edit my profile</a>
-    <a href="{{ path('app_logout') }}" type="button">Log out</a>
+    <a href="{{ path('app_user_profile_edit', {'id': user.id}) }}">Edit my profile</a>
 {% endblock %}

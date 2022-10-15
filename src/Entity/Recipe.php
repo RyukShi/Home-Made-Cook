@@ -78,7 +78,12 @@ class Recipe
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $updatedAt = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::SMALLINT)]
+    #[Assert\NotBlank]
+    #[Assert\Expression(
+        'value >= 1',
+        message: 'The value must be greater than or equal to 1.'
+    )]
     private ?int $peopleNumber = null;
 
     #[ORM\Column(length: 255)]
@@ -86,6 +91,12 @@ class Recipe
 
     #[ORM\Column]
     private \DateTimeImmutable $createdAt;
+
+    #[ORM\Column]
+    private int $likes = 0;
+
+    #[ORM\Column]
+    private float $recipeScore = 0.0;
 
     public function __construct()
     {
@@ -317,5 +328,32 @@ class Recipe
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
+    }
+
+    public function getLikes(): int
+    {
+        return $this->likes;
+    }
+
+    public function increaseLikes(): void
+    {
+        $this->likes++;
+    }
+
+    public function decreaseLikes(): void
+    {
+        $this->likes--;
+    }
+
+    public function getRecipeScore(): float
+    {
+        return $this->recipeScore;
+    }
+
+    public function setRecipeScore(float $recipeScore): self
+    {
+        $this->recipeScore = $recipeScore;
+
+        return $this;
     }
 }

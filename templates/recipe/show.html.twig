@@ -6,6 +6,16 @@
     <h1>{{ recipe.name|upper }}</h1>
     <h4>{{ 'Create by: ' ~ recipe.cooker.username ~ ' on ' ~ recipe.createdAt|date('d/m/Y') }}</h4>
 
+    {# show success messages #}
+    {% for success in app.flashes('success') %}
+        <p style="color: green;">{{ success }}</p>
+    {% endfor %}
+
+    {# show info messages #}
+    {% for info in app.flashes('info') %}
+        <p style="color: blue;">{{ info }}</p>
+    {% endfor %}
+
     <div>
         {% if recipe.imageName is not null %}
             <img src="{{ asset('uploads/images/recipes/' ~ recipe.imageName) }}" alt="{{ recipe.name }}" />
@@ -26,7 +36,7 @@
         </div>
     </div>
 
-    {% if app.user %}
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         {{ form_start(favorite_form) }}
             {{ form_row(favorite_form.submit) }}
         {{ form_end(favorite_form) }}
@@ -41,7 +51,7 @@
 
     <h2>Comments</h2>
 
-    {% if app.user %}
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         {{ form_start(comment_form) }}
             {{ form_row(comment_form.content) }}
             {{ form_row(comment_form.submit) }}
@@ -54,7 +64,7 @@
                 <p>{{ comment.content }}</p>
                 <p>By {{ comment.cooker.username }} on {{ comment.createdAt|date('d/m/Y') }}</p>
                 {# if the user is logged in and is the author of the comment #}
-                {% if app.user and app.user.id == comment.cooker.id %}
+                {% if is_granted('IS_AUTHENTICATED_FULLY') and app.user.id == comment.cooker.id %}
                     <a href="{{ path('app_comment_edit', {'id': comment.id}) }}">Edit</a>
                     {{ include('comment/_delete_form.html.twig') }}
                 {% endif %}

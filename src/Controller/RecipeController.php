@@ -57,6 +57,7 @@ class RecipeController extends AbstractController
     #[Route('/{id}', name: 'app_recipe_show', methods: ['GET', 'POST'], requirements: ['id' => '[1-9]\d*'])]
     public function show(
         Recipe $recipe,
+        RecipeRepository $recipeRepository,
         UserRepository $userRepository,
         Request $request,
         CommentRepository $commentRepository
@@ -99,12 +100,19 @@ class RecipeController extends AbstractController
                 if ($isFavorite) {
                     // remove the recipe from the user's favorites
                     $user->removeRecipeFromFavorites($recipe->getId());
+                    $this->addFlash('success', 'Recipe removed from favorites');
+                    $recipe->decreaseLikes();
                 } else {
                     // add the recipe to the user's favorites
                     $user->addRecipeToFavorites($recipe->getId());
+                    $this->addFlash('success', 'Recipe added to favorites');
+                    $recipe->increaseLikes();
                 }
                 // persist the user and flush it
                 $userRepository->add($user, true);
+                // persist the recipe and flush it
+                $recipeRepository->add($recipe, true);
+                $this->addFlash('info', 'You can see your favorites in your profile');
                 // redirect to the recipe show page
                 return $this->redirectToRoute(
                     'app_recipe_show',

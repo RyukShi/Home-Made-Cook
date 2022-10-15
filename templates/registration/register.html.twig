@@ -5,13 +5,21 @@
 {% block body %}
     <h1>Register</h1>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.username) }}
-        {{ form_row(registrationForm.plainPassword, {
+    {# show error messages #}
+    {% for error in app.flashes('error') %}
+        <p style="color: red;">{{ error }}</p>
+    {% endfor %}
+
+    {{ form_start(registration_form) }}
+        {{ form_row(registration_form.username) }}
+        {{ form_row(registration_form.plainPassword, {
             label: 'Password'
         }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+        {{ form_row(registration_form.confirmPassword, {
+            label: 'Confirm Password'
+        }) }}
+        {{ form_row(registration_form.agreeTerms) }}
 
         <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+    {{ form_end(registration_form) }}
 {% endblock %}
