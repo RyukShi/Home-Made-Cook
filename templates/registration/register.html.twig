@@ -3,23 +3,36 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
-
     {# show error messages #}
     {% for error in app.flashes('error') %}
-        <p style="color: red;">{{ error }}</p>
+        <div class="flash-message flash-message-danger">
+            {{ error }}
+            <span class="close-alert float-right text-xl cursor-pointer">&times;</span>
+        </div>
     {% endfor %}
 
-    {{ form_start(registration_form) }}
-        {{ form_row(registration_form.username) }}
-        {{ form_row(registration_form.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registration_form.confirmPassword, {
-            label: 'Confirm Password'
-        }) }}
-        {{ form_row(registration_form.agreeTerms) }}
-
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registration_form) }}
+    <div class="centered">
+        {{ form_start(registration_form, { attr: {'class': 'form'}}) }}
+            <h2 class="sub-title">Register</h2>
+            {{ form_row(registration_form.username) }}
+            {{ form_row(registration_form.plainPassword, {
+                label: 'Password',
+                attr: {
+                    placeholder: '********'
+                }
+            }) }}
+            {{ form_row(registration_form.confirmPassword, {
+                label: 'Confirm Password',
+                attr: {
+                    placeholder: '********'
+                }
+            }) }}
+            {{ form_row(registration_form.agreeTerms, {
+                label: 'I agree to the terms and conditions'
+            }) }}
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Register now!</button>
+            </div>
+        {{ form_end(registration_form) }}
+    </div>
 {% endblock %}

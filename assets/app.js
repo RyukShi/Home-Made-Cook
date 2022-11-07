@@ -27,5 +27,20 @@ const addForm = (event) => {
     // increment index
     collectionHolder.dataset.index++;
 };
-// attach event listener to add button
-document.querySelector('.btn-add-item').addEventListener('click', addForm);
+
+const closeAlert = (event) => {
+    // remove parent element
+    event.currentTarget.parentElement.remove();
+};
+
+if (document.querySelector('.close-alert')) {
+    document.querySelectorAll('.close-alert').forEach((btn) => {
+        // attach event listener to each close alert button
+        btn.addEventListener('click', closeAlert);
+    });
+}
+
+if (document.querySelector('.btn-add-item')) {
+    // attach event listener to add button
+    document.querySelector('.btn-add-item').addEventListener('click', addForm);
+}

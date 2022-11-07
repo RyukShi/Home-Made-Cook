@@ -44,27 +44,27 @@ class RecipeType extends AbstractType
                 'allow_delete' => true,
             ])
             ->add('tags', EntityType::class, [
-                'label' => 'Select tags : ',
+                'label' => 'Select tags',
                 'class' => Tag::class,
                 'choice_label' => 'name',
                 'multiple' => true,
                 'expanded' => true,
             ])
             ->add('thematic', EntityType::class, [
-                'label' => 'Choose one thematic : ',
+                'label' => 'Choose one thematic',
                 'class' => Thematic::class,
                 'choice_label' => 'name',
                 'multiple' => false
             ])
             ->add('category', EntityType::class, [
-                'label' => 'Choose one category : ',
+                'label' => 'Choose one category',
                 'class' => Category::class,
                 'choice_label' => 'name',
                 'multiple' => false,
                 'expanded' => true,
             ])
             ->add('difficulty', ChoiceType::class, [
-                'label' => 'Recipe difficulty : ',
+                'label' => 'Recipe difficulty',
                 'choices' => [
                     'Easy' => 'Easy',
                     'Medium' => 'Medium',
@@ -80,7 +80,7 @@ class RecipeType extends AbstractType
                 ],
             ])
             ->add('recipeCost', ChoiceType::class, [
-                'label' => 'Recipe cost : ',
+                'label' => 'Recipe cost',
                 'choices' => [
                     'Cheap' => 'Cheap',
                     'Medium' => 'Medium',

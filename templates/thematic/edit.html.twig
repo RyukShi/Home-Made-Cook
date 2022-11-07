@@ -1,13 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Thematic{% endblock %}
+{% block title %}Edit {{ thematic.name ~ ' thematic' }}{% endblock %}
 
 {% block body %}
-    <h1>Edit Thematic</h1>
+    <h1 class="main-title">Edit {{ thematic.name ~ ' thematic' }}</h1>
 
     {{ include('thematic/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_thematic_index') }}">back to list</a>
-
-    {{ include('thematic/_delete_form.html.twig') }}
+    <div class="flex gap-3 mt-4">
+        <a class="btn btn-primary" href="{{ path('app_thematic_index') }}">Back to list</a>
+        {{ include('thematic/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

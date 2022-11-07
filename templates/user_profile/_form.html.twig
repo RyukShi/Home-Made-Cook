@@ -1,7 +1,10 @@
-{{ form_start(form) }}
+{{ form_start(form, {attr: {'class': 'form'}}) }}
     {{ form_row(form.username) }}
     {{ form_row(form.plainPassword) }}
     {{ form_row(form.confirmPassword) }}
     {{ form_row(form.imageFile) }}
-    {{ form_row(form.submit) }}
+    <div class="flex gap-3 justify-center">
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a class="btn btn-danger" href="{{ path('app_user_profile_index') }}">Cancel</a>
+    </div>
 {{ form_end(form)}}

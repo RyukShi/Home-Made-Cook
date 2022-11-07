@@ -1,39 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Recipe index{% endblock %}
+{% block title %}Recipes{% endblock %}
 
 {% block body %}
-    <h1>Recipe index</h1>
+    <h1 class="main-title">Recipes</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Ingredients</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for recipe in recipes %}
-            <tr>
-                <td>{{ recipe.id }}</td>
-                <td>{{ recipe.name }}</td>
-                <td>{{ recipe.description }}</td>
-                <td>{{ recipe.ingredients ? recipe.ingredients|json_encode : '' }}</td>
-                <td>
-                    <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}">show</a>
-                    <a href="{{ path('app_recipe_edit', {'id': recipe.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <a href="{{ path('app_recipe_new') }}" class="btn btn-primary">Create new</a>
+    {% endif %}
 
-    <a href="{{ path('app_recipe_new') }}">Create new</a>
+    {% if recipes is not empty %}
+        <p class="mt-4">{{ recipes|length ~ ' recipe(s) found.' }}</p>
+        <div class="card-container">
+            {% for recipe in recipes %}
+                <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}" class="card">
+                    <h5 class="card-title">{{ recipe.name }}</h5>
+                    <p class="card-p">Created by {{ recipe.cooker.username }} on {{ recipe.createdAt|date('Y-m-d') }}</p>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>There are no recipes in the database yet.</p>
+    {% endif %}
 {% endblock %}

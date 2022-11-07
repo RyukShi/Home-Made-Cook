@@ -1,35 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Thematic index{% endblock %}
+{% block title %}Thematics{% endblock %}
 
 {% block body %}
-    <h1>Thematic index</h1>
+    <h1 class="main-title">Thematics</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for thematic in thematics %}
-            <tr>
-                <td>{{ thematic.id }}</td>
-                <td>{{ thematic.name }}</td>
-                <td>
-                    <a href="{{ path('app_thematic_show', {'id': thematic.id}) }}">show</a>
-                    <a href="{{ path('app_thematic_edit', {'id': thematic.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('app_thematic_new') }}" class="btn btn-primary">Create new</a>
+    {% endif %}
 
-    <a href="{{ path('app_thematic_new') }}">Create new</a>
+    {% if thematics is not empty %}
+        <p class="mt-4">{{ thematics|length ~ ' thematic(s) found.' }}</p>
+        <div class="card-container">
+            {% for thematic in thematics %}
+                <a href="{{ path('app_thematic_show', {'id': thematic.id}) }}" class="card">
+                    <h5 class="card-title">{{ thematic.name }}</h5>
+                    <p class="card-p">{{ thematic.recipes|length ~ ' recipe(s) in this thematic' }}</p>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>There are no thematics in the database yet.</p>
+    {% endif %}
 {% endblock %}

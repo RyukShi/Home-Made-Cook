@@ -1,4 +1,4 @@
-{{ form_start(recipe_form) }}
+{{ form_start(recipe_form, {attr: {'class': 'form'}}) }}
     {{ form_widget(recipe_form._token) }}
     {{ form_errors(recipe_form) }}
 
@@ -6,7 +6,9 @@
 
     {{ form_errors(recipe_form.ingredients) }}
 
-    <button type="button" class="btn-add-item" data-collection-holder-id="#ingredients">Add new ingredient</button>
+    <div class="text-center">
+        <button type="button" class="btn btn-primary btn-add-item" data-collection-holder-id="#ingredients">Add new ingredient</button>
+    </div>
 
     <div
         class="flex flex-wrap justify-evenly"
@@ -20,7 +22,11 @@
         {% endfor %}
     </div>
 
-    {{ form_row(recipe_form.description) }}
+    {{ form_row(recipe_form.description, {attr: {'style': 'height: 200px;'}}) }}
+
+    {{ form_row(recipe_form.preparationTime) }}
+
+    {{ form_row(recipe_form.peopleNumber) }}
 
     {{ form_row(recipe_form.tags) }}
 
@@ -30,14 +36,11 @@
 
     {{ form_row(recipe_form.difficulty) }}
 
-    {{ form_row(recipe_form.preparationTime) }}
-
     {{ form_row(recipe_form.recipeCost) }}
-
-    {{ form_row(recipe_form.peopleNumber) }}
 
     {{ form_row(recipe_form.imageFile)}}
 
-    <button type="submit">{{ button_label|default('Create new recipe !') }}</button>
-
+    <div class="text-center">
+        <button class="btn btn-primary" type="submit">{{ button_label|default('Create new recipe!') }}</button>
+    </div>
 {{ form_end(recipe_form) }}

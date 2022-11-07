@@ -61,7 +61,7 @@ class UserProfileController extends AbstractController
             return $this->redirectToRoute('app_user_profile_index');
         }
         return $this->renderForm('user_profile/edit.html.twig', [
-            'userModificationForm' => $userModificationForm,
+            'user_modification_form' => $userModificationForm,
             'user' => $user,
         ]);
     }

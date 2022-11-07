@@ -3,6 +3,144 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    background-color: #659DDD;
+@layer base {
+
+    body {
+        @apply bg-blue-400 h-full;
+    }
+
+    main {
+        @apply ml-4 mr-4 text-base text-gray-800;
+    }
+}
+
+@layer components {
+
+    .centered {
+        @apply flex justify-center;
+    }
+
+    .card-container {
+        @apply mt-4 mb-4;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        grid-column-gap: 15px;
+        grid-row-gap: 15px;
+    }
+
+    /* titles */
+    .main-title {
+        @apply text-4xl text-gray-800 dark:text-gray-50 font-serif mt-4 mb-4;
+    }
+
+    .sub-title {
+        @apply text-2xl text-gray-800 dark:text-gray-50 font-serif mt-4 mb-4;
+    }
+
+    /* nav menu */
+    .nav-menu {
+        @apply bg-white px-2 sm:px-4 py-2.5 dark:bg-gray-800;
+    }
+
+    .nav-menu-container {
+        @apply container flex flex-wrap justify-between items-center mx-auto;
+    }
+
+    .nav-menu-item {
+        @apply block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent;
+    }
+
+    /* buttons */
+    .btn {
+        @apply block max-w-max rounded-md text-sm px-5 py-2 text-white mb-4 mt-4;
+    }
+
+    .btn-primary {
+        @apply bg-blue-600 hover:bg-blue-800 hover:scale-105 hover:duration-100;
+    }
+
+    .btn-danger {
+        @apply bg-red-600 hover:bg-red-800 hover:scale-105 hover:duration-100;
+    }
+
+    .btn-success {
+        @apply bg-green-600 hover:bg-green-800 hover:scale-105 hover:duration-100;
+    }
+
+    .btn-warning {
+        @apply bg-yellow-600 hover:bg-yellow-800 hover:scale-105 hover:duration-100;
+    }
+
+    .btn-love {
+        @apply bg-pink-600 hover:bg-pink-800 hover:scale-105 hover:duration-100;
+    }
+
+    /* card */
+    .card {
+        @apply p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md;
+        /* hover and dark mode */
+        @apply hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700;
+    }
+
+    .card-title {
+        @apply mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white;
+    }
+
+    .card-p {
+        @apply font-normal text-gray-700 dark:text-gray-400;
+    }
+
+    /* form */
+    .form {
+        @apply flex flex-col max-w-2xl w-full bg-gray-50 dark:bg-gray-800 rounded-lg shadow-md p-6 mt-12 mb-12;
+    }
+
+    .form > div > label {
+        @apply block text-gray-500 font-bold mb-1 dark:text-gray-50;
+    }
+
+    input, textarea, select {
+        @apply block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border-2 border-gray-300 focus:border-blue-600 mb-4;
+        /* dark mode */
+        @apply dark:bg-gray-600 dark:placeholder-gray-400 dark:text-white;
+        outline: none;
+    }
+
+    /* flash messages */
+    .flash-message {
+        @apply block p-4 mt-4 rounded-lg border border-white shadow-md text-white max-w-xl;
+    }
+
+    .flash-message-success {
+        @apply bg-green-600 hover:bg-green-800;
+    }
+
+    .flash-message-danger {
+        @apply bg-red-600 hover:bg-red-800;
+    }
+
+    .flash-message-warning {
+        @apply bg-yellow-600 hover:bg-yellow-800;
+    }
+
+    .flash-message-info {
+        @apply bg-blue-600 hover:bg-blue-800;
+    }
+
+    /* user profile */
+    .profile-picture {
+        @apply rounded-full w-32 h-32 mt-4 mb-4;
+    }
+
+    /* recipe view */
+    .comments {
+        @apply bg-gray-50 max-w-max border-2 rounded-lg border-gray-300 p-4 mb-4 mt-4;
+        /* dark mode */
+        @apply dark:text-white dark:bg-gray-600;
+    }
+
+    .tag {
+        @apply text-xs inline-flex items-center font-bold uppercase px-3 py-1 bg-blue-200 text-blue-600 rounded-full;
+    }
 }

@@ -1,35 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Category index{% endblock %}
+{% block title %}Categories{% endblock %}
 
 {% block body %}
-    <h1>Category index</h1>
+    <h1 class="main-title">Categories</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for category in categories %}
-            <tr>
-                <td>{{ category.id }}</td>
-                <td>{{ category.name }}</td>
-                <td>
-                    <a href="{{ path('app_category_show', {'id': category.id}) }}">show</a>
-                    <a href="{{ path('app_category_edit', {'id': category.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('app_category_new') }}" class="btn btn-primary">Create new</a>
+    {% endif %}
 
-    <a href="{{ path('app_category_new') }}">Create new</a>
+    {% if categories is not empty %}
+        <p class="mt-4">{{ categories|length ~ ' categories found.' }}</p>
+        <div class="card-container">
+            {% for category in categories %}
+                <a href="{{ path('app_category_show', {'id': category.id}) }}" class="card">
+                    <h5 class="card-title">{{ category.name }}</h5>
+                    <p class="card-p">{{ category.recipes|length ~ ' recipe(s) in this category' }}</p>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>There are no categories in the database yet.</p>
+    {% endif %}
 {% endblock %}

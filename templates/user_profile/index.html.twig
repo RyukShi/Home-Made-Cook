@@ -3,33 +3,36 @@
 {% block title %}My Profile{% endblock %}
 
 {% block body %}
-    <h1>My Profile</h1>
+    <h1 class="main-title">My Profile</h1>
 
-    <h3>Hi <strong>{{ user.username }}</strong>, happy to see you again.</h3>
+    <h2>Hi <strong>{{ user.username }}</strong>, happy to see you again.</h2>
 
     {% if user.imageName is not null %}
-        <img src="{{ asset('uploads/images/profiles_pictures/' ~ recipe.imageName) }}" alt="User profile picture" />
+        <img class="profile-picture" src="{{ asset('uploads/images/profiles_pictures/' ~ recipe.imageName) }}" alt="User profile picture" />
     {% else %}
-        <img src="{{ asset('uploads/images/profiles_pictures/default/default.jpg') }}" alt="User profile picture" />
+        <img class="profile-picture" src="{{ asset('uploads/images/profiles_pictures/default/default.jpg') }}" alt="User profile picture" />
     {% endif %}
+
+    <div class="flex gap-3">
+        {% if user.favorites is not empty %}
+            <a class="btn btn-love" href="{{ path('app_user_profile_favorites', {'id': user.id}) }}">My Favorites Recipes</a>
+        {% endif %}
+        <a class="btn btn-primary" href="{{ path('app_user_profile_edit', {'id': user.id}) }}">Edit my profile</a>
+    </div>
 
     {% if user.recipes is not empty %}
-        <h3>My Recipes</h3>
-        <ul>
+        <h2 class="sub-title">My Recipes</h2>
+        <p>{{ 'You posted ' ~ user.recipes|length ~ ' recipe(s)' }}</p>
+        <div class="card-container">
             {% for recipe in user.recipes %}
-                <li>
-                    <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}">{{ recipe.name }}</a>
-                </li>
+                <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}" class="card">
+                    <h5 class="card-title">{{ recipe.name }}</h5>
+                    <p class="card-p">Created at {{ recipe.createdAt|date('Y-m-d') }}</p>
+                </a>
             {% endfor %}
-        </ul>
+        </div>
     {% else %}
-        <p>You have no recipes yet.</p>
-        <a href="{{ path('app_recipe_new') }}">Create a new recipe !</a>
+        <p class="mb-4">You have no recipes yet.</p>
+        <a class="btn btn-primary" href="{{ path('app_recipe_new') }}">Create new recipe!</a>
     {% endif %}
-
-    {% if user.favorites is not empty %}
-        <a href="{{ path('app_user_profile_favorites', {'id': user.id}) }}">My Favorites Recipes</a>
-    {% endif %}
-
-    <a href="{{ path('app_user_profile_edit', {'id': user.id}) }}">Edit my profile</a>
 {% endblock %}

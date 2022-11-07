@@ -14,8 +14,8 @@
     </head>
     <body>
         {# nav menu #}
-        <nav class="bg-white px-2 sm:px-4 py-2.5 dark:bg-gray-900">
-            <div class="container flex flex-wrap justify-between items-center mx-auto">
+        <nav class="nav-menu">
+            <div class="nav-menu-container">
                 <a href="{{ path('app_home') }}" class="flex items-center">
                     <img src="" class="mr-3 h-6 sm:h-9" alt="">
                     <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Home Made Cook</span>
@@ -27,38 +27,48 @@
                 <div class="hidden w-full md:block md:w-auto" id="navbar-default">
                     <ul class="flex flex-col p-4 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                         <li>
-                            <a href="{{ path('app_home') }}" class="block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">
+                            <a href="{{ path('app_home') }}" class="nav-menu-item" aria-current="page">
                                 Home
                             </a>
                         </li>
                         <li>
-                            <a href="{{ path('app_recipe_index') }}" class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                            <a href="{{ path('app_recipe_index') }}" class="nav-menu-item">
                                 Recipes
                             </a>
                         </li>
                         <li>
-                            <a href="{{ path('app_category_index') }}" class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                            <a href="{{ path('app_category_index') }}" class="nav-menu-item">
                                 Categories
                             </a>
                         </li>
                         <li>
-                            <a href="{{ path('app_thematic_index') }}" class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                            <a href="{{ path('app_thematic_index') }}" class="nav-menu-item">
                                 Thematics
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ path('app_tag_index') }}" class="nav-menu-item">
+                                Tags
+                            </a>
+                        </li>
                         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                            <a href="{{ path('app_user_profile_index') }}" class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Your profile</a>
-                            <a href="{{ path('app_logout') }}" class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Log out</a>
+                            <li>
+                                <a href="{{ path('app_user_profile_index') }}" class="nav-menu-item">Your profile</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_logout') }}" class="nav-menu-item">Log out</a>
+                            </li>
                         {% else %}
-                            <a href="{{ path('app_login') }}" class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Log in</a>
-                            <a href="{{ path('app_register') }}" class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Register</a>
+                            <li>
+                                <a href="{{ path('app_login') }}" class="nav-menu-item">Log in</a>
+                            </li>
                         {% endif %}
                     </ul>
                 </div>
             </div>
         </nav>
-
-        {% block body %}{% endblock %}
-
+        <main>
+            {% block body %}{% endblock %}
+        </main>
     </body>
 </html>

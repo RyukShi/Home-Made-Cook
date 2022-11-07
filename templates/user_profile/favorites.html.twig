@@ -3,16 +3,15 @@
 {% block title %}My favorites recipes{% endblock %}
 
 {% block body %}
-    {% for recipe in favorites_recipe %}
-        <div class="">
-            {% if recipe.imageName %}
-                <img src="{{ asset('uploads/images/recipes' ~ recipe.imageName) }}" class="" alt="{{ recipe.name }}" />
-            {% endif %}
-            <div class="">
-                <h5 class="">{{ recipe.name }}</h5>
-                <p class="">{{ recipe.peopleNumber ~ ' people' }} | {{ '$ ' ~ recipe.recipeCost }} | {{ 'Difficulty : ' ~ recipe.difficulty|upper }}</p>
-                <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}">Show</a>
-            </div>
-        </div>
-    {% endfor %}
+    <h1 class="main-title">My favorites recipes</h1>
+    <p class="mb-4">{{ 'You have ' ~ favorites_recipe|length ~ ' recipe(s) in your favorites recipes.' }}</p>
+    <a class="btn btn-primary" href="{{ path('app_user_profile_index') }}">Back to my profile</a>
+    <div class="card-container">
+        {% for recipe in favorites_recipe %}
+            <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}" class="card">
+                <h5 class="card-title">{{ recipe.name }}</h5>
+                <p class="card-p">Created by {{ recipe.cooker.username }} on {{ recipe.createdAt|date('Y-m-d') }}</p>
+            </a>
+        {% endfor %}
+    </div>
 {% endblock %}
