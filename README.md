@@ -24,6 +24,19 @@ And to finish, uncomment options pdo_pgsql and pgsql in your php.ini file to con
 
 ### Commands
 
-Start Symfony server `symfony serve`  
+Start Symfony server
+```bash
+symfony serve
+```  
 
-To run webpack-dev-server use this command (for CSS and JavaScript) `npm run dev-server`
+To run webpack-dev-server use this command (for CSS and JavaScript)
+```bash
+npm run dev-server
+```
+
+To run unit tests use this command
+```bash
+php .\vendor\bin\phpunit
+
+php .\vendor\bin\phpunit --coverage-html ./public/test-coverage
+```
