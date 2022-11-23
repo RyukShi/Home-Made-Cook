@@ -6,11 +6,11 @@
     <h1 class="main-title">Thematics</h1>
 
     {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('app_thematic_new') }}" class="btn btn-primary">Create new</a>
+        <a href="{{ path('app_thematic_new') }}" class="btn btn-primary block">Create new</a>
     {% endif %}
 
     {% if thematics is not empty %}
-        <p class="mt-4">{{ thematics|length ~ ' thematic(s) found.' }}</p>
+        <p>{{ thematics|length ~ ' thematic(s) found.' }}</p>
         <div class="card-container">
             {% for thematic in thematics %}
                 <a href="{{ path('app_thematic_show', {'id': thematic.id}) }}" class="card">

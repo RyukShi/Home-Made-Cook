@@ -5,7 +5,7 @@
 {% block body %}
     <h1 class="main-title">My Profile</h1>
 
-    <h2>Hi <strong>{{ user.username }}</strong>, happy to see you again.</h2>
+    <h2 class="sub-title">Hi <strong>{{ user.username }}</strong>, happy to see you again.</h2>
 
     {% if user.imageName is not null %}
         <img class="profile-picture" src="{{ asset('uploads/images/profiles_pictures/' ~ recipe.imageName) }}" alt="User profile picture" />
@@ -13,7 +13,7 @@
         <img class="profile-picture" src="{{ asset('uploads/images/profiles_pictures/default/default.jpg') }}" alt="User profile picture" />
     {% endif %}
 
-    <div class="flex gap-3">
+    <div class="flex gap-x-4">
         {% if user.favorites is not empty %}
             <a class="btn btn-love" href="{{ path('app_user_profile_favorites', {'id': user.id}) }}">My Favorites Recipes</a>
         {% endif %}
@@ -33,6 +33,6 @@
         </div>
     {% else %}
         <p class="mb-4">You have no recipes yet.</p>
-        <a class="btn btn-primary" href="{{ path('app_recipe_new') }}">Create new recipe!</a>
+        <a class="btn btn-primary block" href="{{ path('app_recipe_new') }}">Create new recipe!</a>
     {% endif %}
 {% endblock %}

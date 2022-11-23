@@ -6,11 +6,11 @@
     <h1 class="main-title">Categories</h1>
 
     {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('app_category_new') }}" class="btn btn-primary">Create new</a>
+        <a href="{{ path('app_category_new') }}" class="btn btn-primary block">Create new</a>
     {% endif %}
 
     {% if categories is not empty %}
-        <p class="mt-4">{{ categories|length ~ ' categories found.' }}</p>
+        <p>{{ categories|length ~ ' categories found.' }}</p>
         <div class="card-container">
             {% for category in categories %}
                 <a href="{{ path('app_category_show', {'id': category.id}) }}" class="card">

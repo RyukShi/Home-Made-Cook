@@ -11,7 +11,7 @@
     {% endif %}
     <div class="centered">
         <form method="POST" class="form">
-            <h2 class="sub-title">Sign in</h2>
+            <h2 class="sub-title dark:text-white">Sign in</h2>
             <div>
                 <label for="inputUsername">Username</label>
                 <input type="text" value="{{ last_username }}" name="username" id="inputUsername" placeholder="Your username" required autofocus />
@@ -27,9 +27,9 @@
                 <label for="rememberMe">Remember me</label>
                 <input type="checkbox" name="_remember_me" id="rememberMe" checked />
             </div>
-            <div class="text-center">
+            <div class="flex flex-col gap-y-4 items-center">
                 <button class="btn btn-primary" type="submit">Sign in</button>
-                <p class="text-blue-600 dark:text-white mb-4 border-t">Do not have an account yet ?</p>
+                <p class="text-blue-600 dark:text-white border-t-4 border-dotted px-16 pt-4">Do not have an account yet ?</p>
                 <a class="btn btn-primary" href="{{ path('app_register') }}">Register now !</a>
             </div>
         </form>

@@ -23,7 +23,7 @@
     {% endfor %}
 
     <div>
-        <div class="flex gap-3 mt-4">
+        <div class="flex gap-x-4">
             <a class="btn btn-primary" href="{{ path('app_recipe_index') }}">Back to list</a>
 
             {% if is_cooker %}
@@ -72,7 +72,7 @@
                 <p class="text-xs mt-4">By {{ comment.cooker.username }} on {{ comment.createdAt|date('d/m/Y') }}</p>
                 {# if the user is logged in and is the author of the comment #}
                 {% if is_granted('IS_AUTHENTICATED_FULLY') and app.user.id == comment.cooker.id %}
-                    <a href="{{ path('app_comment_edit', {'id': comment.id}) }}" class="btn btn-primary">Edit</a>
+                    <a href="{{ path('app_comment_edit', {'id': comment.id}) }}" class="btn btn-primary block">Edit</a>
                 {% endif %}
             </div>
         {% endfor %}

@@ -3,7 +3,7 @@
     {{ form_row(form.plainPassword) }}
     {{ form_row(form.confirmPassword) }}
     {{ form_row(form.imageFile) }}
-    <div class="flex gap-3 justify-center">
+    <div class="centered gap-x-4">
         <button type="submit" class="btn btn-primary">Update</button>
         <a class="btn btn-danger" href="{{ path('app_user_profile_index') }}">Cancel</a>
     </div>

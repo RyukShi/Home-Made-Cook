@@ -5,7 +5,7 @@
 {% block body %}
     <h1 class="main-title">My favorites recipes</h1>
     <p class="mb-4">{{ 'You have ' ~ favorites_recipe|length ~ ' recipe(s) in your favorites recipes.' }}</p>
-    <a class="btn btn-primary" href="{{ path('app_user_profile_index') }}">Back to my profile</a>
+    <a class="btn btn-primary block" href="{{ path('app_user_profile_index') }}">Back to my profile</a>
     <div class="card-container">
         {% for recipe in favorites_recipe %}
             <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}" class="card">

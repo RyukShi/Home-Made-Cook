@@ -6,11 +6,11 @@
     <h1 class="main-title">Recipes</h1>
 
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <a href="{{ path('app_recipe_new') }}" class="btn btn-primary">Create new</a>
+        <a href="{{ path('app_recipe_new') }}" class="btn btn-primary block">Create new</a>
     {% endif %}
 
     {% if recipes is not empty %}
-        <p class="mt-4">{{ recipes|length ~ ' recipe(s) found.' }}</p>
+        <p>{{ recipes|length ~ ' recipe(s) found.' }}</p>
         <div class="card-container">
             {% for recipe in recipes %}
                 <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}" class="card">
