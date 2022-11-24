@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ cooker.username }}{% endblock %}
+
+{% block body %}
+    <h1 class="main-title">{{ cooker.username ~ '\'s recipe(s)' }}</h1>
+
+    <p>{{ cooker.username ~ ' has posted ' ~ cooker.recipes|length ~ ' recipe(s).' }}</p>
+
+    <div class="card-container">
+        {% for recipe in cooker.recipes %}
+            <a href="{{ path('app_recipe_show', {'id': recipe.id}) }}" class="card">
+                <h5 class="card-title">{{ recipe.name }}</h5>
+                <p class="card-p">Created on {{ recipe.createdAt|date('Y-m-d') }}</p>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}

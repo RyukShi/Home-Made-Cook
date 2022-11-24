@@ -4,7 +4,11 @@
 
 {% block body %}
     <h1 class="main-title">{{ recipe.name }}</h1>
-    <h2 class="sub-title">{{ 'Create by: ' ~ recipe.cooker.username ~ ' on ' ~ recipe.createdAt|date('d/m/Y') }}</h2>
+    <h2 class="sub-title">{{ 'Create by ' ~ recipe.cooker.username ~ ' on ' ~ recipe.createdAt|date('d/m/Y') }}</h2>
+
+    {% if not is_cooker %}
+        <a class="btn btn-primary block" href="{{ path('app_cooker_show', {'id': recipe.cooker.id}) }}">View more about Cooker</a>
+    {% endif %}
 
     {# show success messages #}
     {% for success in app.flashes('success') %}

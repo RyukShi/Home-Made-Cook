@@ -1,4 +1,4 @@
-{{ form_start(comment_form) }}
+{{ form_start(comment_form, { attr: {'class': 'max-w-2xl'}}) }}
     {{ form_row(comment_form.content) }}
     <button class="btn btn-primary" type="submit">{{ button_label|default('Comment it!') }}</button>
 {{ form_end(comment_form) }}
