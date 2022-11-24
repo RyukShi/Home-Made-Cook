@@ -158,6 +158,10 @@ class RecipeController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function delete(Request $request, Recipe $recipe, RecipeRepository $recipeRepository): Response
     {
+        if ($recipe->getCooker()->getId() !== $this->getUser()->getId()) {
+            return new Response('You must be the owner of the recipe to delete it.', 403);
+        }
+
         if ($this->isCsrfTokenValid('delete' . $recipe->getId(), $request->request->get('_token'))) {
             $recipeRepository->remove($recipe, true);
         }

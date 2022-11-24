@@ -26,7 +26,7 @@ class RecipeControllerTest extends WebTestCase
     /**
      * @dataProvider userIdProvider
      */
-    public function testUserFavorites(int $userId)
+    public function testUserFavorites(int $userId): void
     {
         /* get user from database */
         $testUser = $this->userRepository->find($userId);
@@ -75,10 +75,43 @@ class RecipeControllerTest extends WebTestCase
         }
     }
 
-    public function userIdProvider()
+    public function userIdProvider(): array
     {
         return [
             [1], [2], [3]
         ];
+    }
+
+    public function testRecipeDelete(): void
+    {
+        $userId = 5;
+        $testUser = $this->userRepository->find($userId);
+        /* login testUser */
+        $this->client->loginUser($testUser);
+        if (!empty($testUser->getRecipes())) {
+            /* simulate a request that login user tries to delete his recipe. */
+            $this->client->request(
+                'POST',
+                $this->urlGenerator->generate('app_recipe_delete', ['id' => $testUser->getRecipes()->first()->getId()])
+            );
+            /* assert code 303 (HTTP_SEE_OTHER) redirection */
+            $this->assertEquals(303, $this->client->getResponse()->getStatusCode());
+            /* logout testUser */
+            $this->client->request('GET', $this->urlGenerator->generate('app_logout'));
+            $anotherUser = $this->userRepository->find(++$userId);
+            /* login anotherUser */
+            $this->client->loginUser($anotherUser);
+            /* simulate a request that the login user tries to delete a recipe that's not theirs. */
+            $this->client->request(
+                'POST',
+                $this->urlGenerator->generate('app_recipe_delete', ['id' => $testUser->getRecipes()->first()->getId()])
+            );
+            /* assert http code is Forbidden */
+            $this->assertEquals(403, $this->client->getResponse()->getStatusCode());
+            /* logout anotherUser */
+            $this->client->request('GET', $this->urlGenerator->generate('app_logout'));
+        } else {
+            echo "Change userId, cause the userRecipes is empty.\n";
+        }
     }
 }
