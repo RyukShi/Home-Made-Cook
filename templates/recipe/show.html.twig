@@ -49,6 +49,7 @@
         <h2 class="sub-title">Recipe's description</h2>
         <p>{{ recipe.description }}</p>
         <p>{{ 'Difficulty: ' ~ recipe.difficulty ~ ' | Cost: ' ~ recipe.recipeCost ~ ' | Preparation time: ' ~ recipe.preparationTime ~ 'min' }}</p>
+        <p>{{ 'Category : ' ~ recipe.category ~ ' Thematic : ' ~ recipe.thematic }}</p>
 
         <h2 class="sub-title">Recipe's ingredients</h2>
         {% for ingredient in recipe.ingredients %}

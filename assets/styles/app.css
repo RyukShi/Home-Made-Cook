@@ -10,7 +10,7 @@
     }
 
     main {
-        @apply ml-8 mr-8 text-gray-800;
+        @apply mx-8 text-gray-800;
     }
 }
 
@@ -21,7 +21,7 @@
     }
 
     .card-container {
-        @apply mt-4 mb-4;
+        @apply my-4;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: repeat(4, 1fr);
@@ -31,11 +31,11 @@
 
     /* titles */
     .main-title {
-        @apply text-4xl mb-4;
+        @apply text-4xl my-4;
     }
 
     .sub-title {
-        @apply text-2xl mt-4 mb-4;
+        @apply text-2xl my-4;
     }
 
     /* nav menu */
@@ -53,7 +53,7 @@
 
     /* buttons */
     .btn {
-        @apply max-w-max rounded-lg text-sm px-4 py-2 text-white mb-4 mt-4 text-center;
+        @apply max-w-max rounded-lg text-sm px-4 py-2 text-white my-4 text-center;
     }
 
     .btn-primary {
@@ -107,6 +107,10 @@
         outline: none;
     }
 
+    .search-form {
+        @apply flex justify-between items-center;
+    }
+
     /* flash messages */
     .flash-message {
         @apply block p-4 mt-4 mb-4 rounded-lg border border-white shadow-md text-white max-w-xl;
@@ -130,14 +134,14 @@
 
     /* user profile */
     .profile-picture {
-        @apply rounded-full w-32 h-32 mt-4 mb-4 border-2;
+        @apply rounded-full w-32 h-32 my-4 border-2;
         /* hover */
         @apply hover:border-amber-500 duration-200;
     }
 
     /* recipe view */
     .comments {
-        @apply bg-gray-50 max-w-max rounded-lg p-4 mb-4 mt-4;
+        @apply bg-gray-50 max-w-max rounded-lg p-4 my-4;
         /* dark mode */
         @apply dark:text-white dark:bg-gray-800;
     }

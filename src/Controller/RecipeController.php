@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Data\SearchRecipe;
 use App\Entity\Recipe;
 use App\Entity\Comment;
 use App\Form\CommentType;
 use App\Form\RecipeType;
+use App\Form\SearchRecipeType;
 use App\Repository\RecipeRepository;
 use App\Repository\CommentRepository;
 use App\Repository\UserRepository;
@@ -20,10 +22,18 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class RecipeController extends AbstractController
 {
     #[Route('/', name: 'app_recipe_index', methods: ['GET'])]
-    public function index(RecipeRepository $recipeRepository): Response
+    public function index(RecipeRepository $recipeRepository, Request $request): Response
     {
-        return $this->render('recipe/index.html.twig', [
-            'recipes' => $recipeRepository->findAll(),
+        $searchRecipe = new SearchRecipe();
+        $searchForm = $this->createForm(SearchRecipeType::class, $searchRecipe);
+        $searchForm->handleRequest($request);
+
+        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+            $filteredRecipes = $recipeRepository->findSearch($searchRecipe);
+        }
+        return $this->renderForm('recipe/index.html.twig', [
+            'recipes' => $filteredRecipes ?? $recipeRepository->findAll(),
+            'search_recipe_form' => $searchForm,
         ]);
     }
 
